@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import CustomException.NoUserException;
+
 public class ServiceCenter {
 	
 	//attributes
@@ -50,8 +52,19 @@ public class ServiceCenter {
 		return users;
 	}
 
-	public void setUsers(ArrayList<User> users) {
-		this.users = users;
+	public void addUser(String id, String n, String l) {
+		users.add(new User(id,n,l));
+	}
+	
+	public User searchUser(String id) throws NoUserException {
+		User findUser = null;
+		for(int i = 0;i < users.size();i++) {
+			findUser = users.get(i).getId().contentEquals(id) ?  users.get(i) : null;
+		}
+		if(findUser == null) {
+			throw new NoUserException(id);
+		}
+		return findUser;
 	}
 	
 }
