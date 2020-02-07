@@ -4,19 +4,31 @@ public class Turn {
 	
 	//atributes
 	
-	private String turn;
+	private char letter;
+	private int num;
 	
 	//methods
 	
-	public Turn(String t) {
-		turn = t;
+	public Turn(char l,int n) {
+		letter = l;
+		num = n;
 	}
 
-	public String getTurn() {
-		return turn;
+	public char getLetter() {
+		return letter;
 	}
 
-	public void setTurn(String turn) {
-		this.turn = turn;
+	public void setLetter(char letter) {
+		this.letter = letter;
 	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	
 }
