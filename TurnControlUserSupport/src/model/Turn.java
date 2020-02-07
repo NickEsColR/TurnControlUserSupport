@@ -30,5 +30,10 @@ public class Turn {
 		this.num = num;
 	}
 
+	@Override
+	public String toString() {
+		return letter + Integer.toString(num) ;
+	}
+
 	
 }

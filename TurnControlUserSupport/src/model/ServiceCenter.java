@@ -10,7 +10,8 @@ public class ServiceCenter {
 	
 	private char actualLetter;
 	private int actualTurnNumber;
-	private String lastTurnGive;
+	private char lastLetterGiven;
+	private int lastNumGiven;
 	
 	//relations
 	
@@ -21,7 +22,8 @@ public class ServiceCenter {
 	public ServiceCenter() {
 		actualLetter = 'A';
 		actualTurnNumber = 0;
-		lastTurnGive = " ";
+		lastLetterGiven= 'A';
+		lastNumGiven= 0;
 	}
 
 	public char getActualLetter() {
@@ -40,12 +42,12 @@ public class ServiceCenter {
 		this.actualTurnNumber = actualTurnNumber;
 	}
 
-	public String getLastTurnGive() {
-		return lastTurnGive;
+	public char getLastLetterGiven() {
+		return lastLetterGiven;
 	}
 
-	public void setLastTurnGive(String lastTurnGive) {
-		this.lastTurnGive = lastTurnGive;
+	public int getLastNumGiven() {
+		return lastNumGiven;
 	}
 
 	public ArrayList<User> getUsers() {
@@ -67,4 +69,10 @@ public class ServiceCenter {
 		return findUser;
 	}
 	
+	public void assignUserTurn(String id) throws NoUserException {
+		User user = searchUser(id);
+		user.setTurn(lastLetterGiven, lastNumGiven);
+		lastLetterGiven = lastNumGiven > 99 ? lastLetterGiven++ : lastLetterGiven;
+		lastNumGiven = lastNumGiven > 99? 0 : lastNumGiven++;
+	}
 }

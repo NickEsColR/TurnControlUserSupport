@@ -49,8 +49,8 @@ public class User {
 	}
 
 
-	public void setTurn(Turn turn) {
-		this.turn = turn;
+	public void setTurn(char l,int n) {
+		turn = new Turn(l,n);
 	}
 
 
