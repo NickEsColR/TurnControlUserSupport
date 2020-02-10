@@ -17,11 +17,13 @@ public class ServiceCenter {
 	private int actualTurnNumber;
 	private char lastLetterGiven;
 	private int lastNumGiven;
-	private int serial;
+	private int actualSerial;
+	private int lastSerialGiven;
 	
 	//relations
 	
 	private ArrayList<User> users;
+
 	
 	//methods
 	
@@ -30,15 +32,24 @@ public class ServiceCenter {
 		actualTurnNumber = 0;
 		lastLetterGiven= 'A';
 		lastNumGiven= 0;
-		serial = 1;
+		actualSerial = 1;
+		lastSerialGiven = 1;
 	}
 
-	public int getSerial() {
-		return serial;
+	public int getLastSerialGiven() {
+		return lastSerialGiven;
 	}
 
-	public void plusSerial() {
-		serial++;
+	public void setLastSerialGiven(int lastSerialGiven) {
+		this.lastSerialGiven = lastSerialGiven;
+	}
+
+	public int getActualSerial() {
+		return actualSerial;
+	}
+
+	public void plusActualSerial() {
+		actualSerial++;
 	}
 
 	public char getActualLetter() {
@@ -80,8 +91,10 @@ public class ServiceCenter {
 	
 	public User searchUser(String id) throws NoUserException {
 		User findUser = null;
-		for(int i = 0;i < users.size();i++) {
+		boolean centinel = true;
+		for(int i = 0;i < users.size()&&centinel;i++) {
 			findUser = users.get(i).getId().contentEquals(id) ?  users.get(i) : null;
+			centinel = findUser != null ? false : true;
 		}
 		if(findUser == null) {
 			throw new NoUserException(id);
@@ -90,7 +103,8 @@ public class ServiceCenter {
 	}
 	
 	public void assignUserTurn(String id) throws NoUserException {
-		searchUser(id).setTurn(lastLetterGiven, lastNumGiven,serial);
+		lastSerialGiven =lastNumGiven > 99 && lastLetterGiven == 'Z' ? lastSerialGiven++ : lastSerialGiven;
+		searchUser(id).setTurn(lastLetterGiven, lastNumGiven,lastSerialGiven);
 		lastLetterGiven = lastNumGiven > 99 ? lastLetterGiven++ : lastLetterGiven;
 		lastNumGiven = lastNumGiven > 99? 0 : lastNumGiven++;
 	}
@@ -101,5 +115,20 @@ public class ServiceCenter {
 	
 	public void addAddress(String id,String a) throws NoUserException {
 		searchUser(id).setAddress(a);
+	}
+	
+	public User searchTurnCall() {
+		User userTurn = null;
+		boolean centinel = true;
+		for(int i = 0;i < users.size()&&centinel;i++) {
+			ArrayList<Turn> t = users.get(i).getTurns();
+			for(int j = 0;j < t.size();j++) {
+				if(t.get(j).getLetter()==actualLetter &&t.get(j).getNum()==actualTurnNumber &&t.get(j).getSerial()==actualSerial) {
+					userTurn = users.get(i);
+					centinel = false;
+				}
+			}
+		}
+		return userTurn;
 	}
 }
