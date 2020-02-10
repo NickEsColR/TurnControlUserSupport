@@ -80,12 +80,15 @@ public class ServiceCenter {
 		return users;
 	}
 
-	public void addUser(String id, String n, String l) throws UserExistException,NoUserException {
-		if(searchUser(id)!=null) {
-			throw new UserExistException(id);
-		}
-		else {
+	public void addUser(String id, String n, String l) throws UserExistException {
+		User u = null;
+		try{
+			u = searchUser(id);
+		}catch(NoUserException e) {
 			users.add(new User(id,n,l));
+		}
+		if(u  != null) {	
+			throw new UserExistException(id);
 		}
 	}
 	
@@ -130,5 +133,22 @@ public class ServiceCenter {
 			}
 		}
 		return userTurn;
+	}
+	
+	public String advanceTurn(int r) {
+		String msg = "";
+		ArrayList<Turn> t= searchTurnCall().getTurns();
+		boolean centinel = true;
+		for(int i = 0;i < t.size()&&centinel;i++) {
+			if(t.get(i).getLetter()==actualLetter &&t.get(i).getNum()==actualTurnNumber &&t.get(i).getSerial()==actualSerial) {
+				t.get(i).setAttended(r);
+				centinel = false;
+			}
+		}
+		return msg;
+	}
+	
+	public String printTurn() {
+		return actualLetter+Integer.toString(actualTurnNumber);
 	}
 }

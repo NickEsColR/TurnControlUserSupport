@@ -7,12 +7,21 @@ public class Turn {
 	private char letter;
 	private int num;
 	private int serial;
+	private int attended;
 	//methods
 	
 	public Turn(char l,int n,int s) {
 		letter = l;
 		num = n;
 		serial = s;
+	}
+
+	public int getAttended() {
+		return attended;
+	}
+
+	public void setAttended(int attended) {
+		this.attended = attended;
 	}
 
 	public char getLetter() {
