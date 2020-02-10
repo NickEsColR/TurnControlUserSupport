@@ -6,6 +6,10 @@ import CustomException.NoUserException;
 
 public class ServiceCenter {
 	
+	//constants
+	
+	public static int ATTENDED=0; 
+	public static int NO_ATTENDED=1;
 	//attributes
 	
 	private char actualLetter;
@@ -70,9 +74,16 @@ public class ServiceCenter {
 	}
 	
 	public void assignUserTurn(String id) throws NoUserException {
-		User user = searchUser(id);
-		user.setTurn(lastLetterGiven, lastNumGiven);
+		searchUser(id).setTurn(lastLetterGiven, lastNumGiven);
 		lastLetterGiven = lastNumGiven > 99 ? lastLetterGiven++ : lastLetterGiven;
 		lastNumGiven = lastNumGiven > 99? 0 : lastNumGiven++;
+	}
+	
+	public void addPhone(String id,String p) throws NoUserException {
+		searchUser(id).setPhone(p);
+	}
+	
+	public void addAddress(String id,String a) throws NoUserException {
+		searchUser(id).setAddress(a);
 	}
 }
