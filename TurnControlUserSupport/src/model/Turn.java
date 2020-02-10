@@ -6,12 +6,13 @@ public class Turn {
 	
 	private char letter;
 	private int num;
-	
+	private int serial;
 	//methods
 	
-	public Turn(char l,int n) {
+	public Turn(char l,int n,int s) {
 		letter = l;
 		num = n;
+		serial = s;
 	}
 
 	public char getLetter() {
@@ -20,6 +21,14 @@ public class Turn {
 
 	public void setLetter(char letter) {
 		this.letter = letter;
+	}
+
+	public int getSerial() {
+		return serial;
+	}
+
+	public void setSerial(int serial) {
+		this.serial = serial;
 	}
 
 	public int getNum() {

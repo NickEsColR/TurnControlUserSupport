@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import CustomException.NoUserException;
+import CustomException.UserExistException;
 
 public class ServiceCenter {
 	
@@ -16,6 +17,7 @@ public class ServiceCenter {
 	private int actualTurnNumber;
 	private char lastLetterGiven;
 	private int lastNumGiven;
+	private int serial;
 	
 	//relations
 	
@@ -28,6 +30,15 @@ public class ServiceCenter {
 		actualTurnNumber = 0;
 		lastLetterGiven= 'A';
 		lastNumGiven= 0;
+		serial = 1;
+	}
+
+	public int getSerial() {
+		return serial;
+	}
+
+	public void plusSerial() {
+		serial++;
 	}
 
 	public char getActualLetter() {
@@ -58,8 +69,13 @@ public class ServiceCenter {
 		return users;
 	}
 
-	public void addUser(String id, String n, String l) {
-		users.add(new User(id,n,l));
+	public void addUser(String id, String n, String l) throws UserExistException,NoUserException {
+		if(searchUser(id)!=null) {
+			throw new UserExistException(id);
+		}
+		else {
+			users.add(new User(id,n,l));
+		}
 	}
 	
 	public User searchUser(String id) throws NoUserException {
@@ -74,7 +90,7 @@ public class ServiceCenter {
 	}
 	
 	public void assignUserTurn(String id) throws NoUserException {
-		searchUser(id).setTurn(lastLetterGiven, lastNumGiven);
+		searchUser(id).setTurn(lastLetterGiven, lastNumGiven,serial);
 		lastLetterGiven = lastNumGiven > 99 ? lastLetterGiven++ : lastLetterGiven;
 		lastNumGiven = lastNumGiven > 99? 0 : lastNumGiven++;
 	}

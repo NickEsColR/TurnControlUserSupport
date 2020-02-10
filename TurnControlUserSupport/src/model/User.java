@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class User {
 	
 	//attributes
@@ -12,7 +14,7 @@ public class User {
 	
 	//relations
 	
-	private Turn turn;
+	private ArrayList<Turn> turns;
 
 	
 	//methods
@@ -21,6 +23,7 @@ public class User {
 		this.id = id;
 		name = n;
 		lastName = l;
+		turns = new ArrayList<Turn>();
 	}
 
 
@@ -44,13 +47,13 @@ public class User {
 	}
 
 
-	public Turn getTurn() {
-		return turn;
+	public ArrayList<Turn> getTurns() {
+		return turns;
 	}
 
 
-	public void setTurn(char l,int n) {
-		turn = new Turn(l,n);
+	public void setTurn(char l,int n, int s) {
+		turns.add( new Turn(l,n,s));
 	}
 
 
@@ -71,7 +74,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User name " + name + ", lastName=" + lastName + ", with turn=" + turn;
+		return "User name " + name + ", lastName=" + lastName;
 	}
 	
 }
