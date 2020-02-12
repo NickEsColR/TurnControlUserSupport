@@ -150,8 +150,9 @@ public class ServiceCenter {
 			else {
 				msg = actualLetter + Integer.toString(actualTurnNumber);
 			}
+		}else {
+			msg = "No user with the next turn";
 		}
-			
 		return msg;
 	}
 	
