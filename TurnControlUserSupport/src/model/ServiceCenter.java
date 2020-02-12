@@ -106,10 +106,11 @@ public class ServiceCenter {
 	}
 	
 	public void assignUserTurn(String id) throws NoUserException {
-		lastSerialGiven =lastNumGiven > 99 && lastLetterGiven == 'Z' ? lastSerialGiven++ : lastSerialGiven;
+		lastSerialGiven =lastNumGiven == 99 && lastLetterGiven == 'Z' ? lastSerialGiven++ : lastSerialGiven;
 		searchUser(id).setTurn(lastLetterGiven, lastNumGiven,lastSerialGiven);
-		lastLetterGiven = lastNumGiven > 99 ? lastLetterGiven++ : lastLetterGiven;
-		lastNumGiven = lastNumGiven > 99? 0 : lastNumGiven++;
+		lastLetterGiven= lastNumGiven == 99 && lastLetterGiven == 'Z' ? 'A' : lastLetterGiven;
+		lastNumGiven = lastNumGiven == 99? 0 : lastNumGiven++;
+		lastLetterGiven = lastNumGiven == 99 ? lastLetterGiven++ : lastLetterGiven;
 	}
 	
 	public void addPhone(String id,String p) throws NoUserException {
@@ -120,14 +121,14 @@ public class ServiceCenter {
 		searchUser(id).setAddress(a);
 	}
 	
-	public User searchTurnCall() {
-		User userTurn = null;
+	public Turn searchTurnCall() {
+		Turn userTurn = null;
 		boolean centinel = true;
 		for(int i = 0;i < users.size()&&centinel;i++) {
 			ArrayList<Turn> t = users.get(i).getTurns();
 			for(int j = 0;j < t.size();j++) {
 				if(t.get(j).getLetter()==actualLetter &&t.get(j).getNum()==actualTurnNumber &&t.get(j).getSerial()==actualSerial) {
-					userTurn = users.get(i);
+					userTurn = users.get(i).getTurns().get(j);
 					centinel = false;
 				}
 			}
@@ -137,14 +138,20 @@ public class ServiceCenter {
 	
 	public String advanceTurn(int r) {
 		String msg = "";
-		ArrayList<Turn> t= searchTurnCall().getTurns();
-		boolean centinel = true;
-		for(int i = 0;i < t.size()&&centinel;i++) {
-			if(t.get(i).getLetter()==actualLetter &&t.get(i).getNum()==actualTurnNumber &&t.get(i).getSerial()==actualSerial) {
-				t.get(i).setAttended(r);
-				centinel = false;
+		Turn t= searchTurnCall();
+		if(t!=null) {
+			t.setAttended(r);
+			actualLetter= actualTurnNumber == 99 && actualLetter == 'Z' ? 'A' : actualLetter;
+			actualTurnNumber = actualTurnNumber == 99? 0 : actualTurnNumber++;
+			actualLetter = actualTurnNumber == 99 ? actualLetter++ : actualLetter;
+			if(actualTurnNumber > 10) {
+				msg = actualLetter + "0"+actualTurnNumber;
+			}
+			else {
+				msg = actualLetter + Integer.toString(actualTurnNumber);
 			}
 		}
+			
 		return msg;
 	}
 	
