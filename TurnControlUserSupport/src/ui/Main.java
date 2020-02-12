@@ -43,13 +43,13 @@ public class Main {
 				}
 			break;
 			case 2:
+				System.out.println("Digit the user큦 identification");
+				String id = board.nextLine();
+				System.out.println("Digit the user큦 name");
+				String name = board.nextLine();
+				System.out.println("Digit the user큦 last name");
+				String ln = board.nextLine();
 				try {
-					System.out.println("Digit the user큦 identification");
-					String id = board.nextLine();
-					System.out.println("Digit the user큦 name");
-					String name = board.nextLine();
-					System.out.println("Digit the user큦 last name");
-					String ln = board.nextLine();
 					serviceCenter.addUser(id, name, ln);
 				}catch(UserExistException e) {
 					System.out.println(e.getMessage());
@@ -61,6 +61,28 @@ public class Main {
 				int a = board.nextInt();
 				board.nextLine();
 				System.out.println(serviceCenter.advanceTurn(a));
+			break;
+			case 4:
+				System.out.println("Digit the user큦 identification");
+				 id = board.nextLine();
+				System.out.println("Digit the user큦 phone");
+				String p = board.nextLine();
+				try {
+					serviceCenter.addPhone(id, p);
+				}catch(NoUserException e) {
+					System.out.println(e.getMessage());
+				}
+			break;
+			case 5:
+				System.out.println("Digit the user큦 identification");
+				 id = board.nextLine();
+				System.out.println("Digit the user큦 address");
+				String a1 = board.nextLine();
+				try {
+					serviceCenter.addAddress(id, a1);
+				}catch(NoUserException e) {
+					System.out.println(e.getMessage());
+				}
 			break;
 			}
 		}
