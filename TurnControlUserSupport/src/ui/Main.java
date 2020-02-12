@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 import CustomException.NoUserException;
 import CustomException.UserExistException;
-import customException.*;
-import customException.*;
+
+
 
 /**
 * NICOLAS ESTEBAN COLMENARES RUIZ
@@ -54,6 +54,13 @@ public class Main {
 				}catch(UserExistException e) {
 					System.out.println(e.getMessage());
 				}
+			break;
+			case 3:
+				System.out.println("Digit number "+ServiceCenter.ATTENDED+" if the previously turn was attended");
+				System.out.println("Digit number "+ServiceCenter.NO_ATTENDED+" if the previously turn wasn´t attended");
+				int a = board.nextInt();
+				board.nextLine();
+				System.out.println(serviceCenter.advanceTurn(a));
 			break;
 			}
 		}
