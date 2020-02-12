@@ -34,6 +34,7 @@ public class ServiceCenter {
 		lastNumGiven= 0;
 		actualSerial = 1;
 		lastSerialGiven = 1;
+		users = new ArrayList<User>();
 	}
 
 	public int getLastSerialGiven() {
@@ -106,11 +107,12 @@ public class ServiceCenter {
 	}
 	
 	public void assignUserTurn(String id) throws NoUserException {
-		lastSerialGiven =lastNumGiven == 99 && lastLetterGiven == 'Z' ? lastSerialGiven++ : lastSerialGiven;
+		lastSerialGiven =lastNumGiven == 99 && lastLetterGiven == 'Z' ? ++lastSerialGiven : lastSerialGiven;
 		searchUser(id).setTurn(lastLetterGiven, lastNumGiven,lastSerialGiven);
-		lastLetterGiven= lastNumGiven == 99 && lastLetterGiven == 'Z' ? 'A' : lastLetterGiven;
-		lastNumGiven = lastNumGiven == 99? 0 : lastNumGiven++;
-		lastLetterGiven = lastNumGiven == 99 ? lastLetterGiven++ : lastLetterGiven;
+		if(lastNumGiven == 99) {
+			lastLetterGiven= lastLetterGiven == 'Z' ? 'A' : ++lastLetterGiven;
+		}
+		lastNumGiven = lastNumGiven == 99? 0 : ++lastNumGiven;
 	}
 	
 	public void addPhone(String id,String p) throws NoUserException {
@@ -141,10 +143,12 @@ public class ServiceCenter {
 		Turn t= searchTurnCall();
 		if(t!=null) {
 			t.setAttended(r);
-			actualLetter= actualTurnNumber == 99 && actualLetter == 'Z' ? 'A' : actualLetter;
-			actualTurnNumber = actualTurnNumber == 99? 0 : actualTurnNumber++;
-			actualLetter = actualTurnNumber == 99 ? actualLetter++ : actualLetter;
-			if(actualTurnNumber > 10) {
+			actualSerial =actualTurnNumber == 99 && actualLetter == 'Z' ? ++actualSerial : actualSerial;
+			if( actualTurnNumber == 99) {
+				actualLetter= actualLetter == 'Z' ? 'A' : ++actualLetter;
+			}
+			actualTurnNumber = actualTurnNumber == 99? 0 : ++actualTurnNumber;
+			if(actualTurnNumber < 10) {
 				msg = actualLetter + "0"+actualTurnNumber;
 			}
 			else {
@@ -157,6 +161,13 @@ public class ServiceCenter {
 	}
 	
 	public String printTurn() {
-		return actualLetter+Integer.toString(actualTurnNumber);
+		String msg = "";
+		if(actualTurnNumber < 10) {
+			msg = actualLetter + "0"+actualTurnNumber;
+		}
+		else {
+			msg = actualLetter + Integer.toString(actualTurnNumber);
+		}
+		return msg;
 	}
 }
