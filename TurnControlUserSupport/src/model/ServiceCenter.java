@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import CustomException.NoUserException;
 import CustomException.UserExistException;
 
+/**
+* NICOLAS ESTEBAN COLMENARES RUIZ
+* UNIVERSIDAD ICESI
+* ALGORITMOS Y PROGRAMACION 2
+* LABORATORIO 1 TurnControl 
+* 06/02/2020
+*/
+
 public class ServiceCenter {
 	
 	//constants
