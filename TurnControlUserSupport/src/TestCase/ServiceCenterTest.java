@@ -21,6 +21,7 @@ class ServiceCenterTest  extends TestCase{
 	}
 	@Test
 	void test() {
+		setup1();
 		fail("Not yet implemented");
 	}
 
