@@ -7,6 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import junit.framework.TestCase;
 
+/**
+* NICOLAS ESTEBAN COLMENARES RUIZ
+* UNIVERSIDAD ICESI
+* ALGORITMOS Y PROGRAMACION 2
+* LABORATORIO 1 TurnControl 
+* 06/02/2020
+*/
 
 class ServiceCenterTest  extends TestCase{
 	

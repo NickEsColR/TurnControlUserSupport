@@ -1,7 +1,7 @@
 package TestCase;
 import model.*;
 import junit.framework.TestCase;
-import static org.junit.jupiter.api.Assertions.*;
+
 
 import org.junit.Test;
 

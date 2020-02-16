@@ -27,54 +27,101 @@ public class User {
 	
 	//methods
 	
+	/**
+	* <b>Descrpition:</b> constructor of a user<br>
+	* @param id is the user's identification <br>
+	* @param n is the user's name <br>
+	* @param l is the user´s last name<br>
+	*/
+	
 	public User(String id, String n, String l) {
 		this.id = id;
 		name = n;
 		lastName = l;
+		address = "";
+		phone = "";
 		turns = new ArrayList<Turn>();
 	}
 
-
+	/**
+	* <b>Description:</b> get the address  of a user<br>
+	* @return address is the address of a user<br>
+	*/
+	
 	public String getAddress() {
 		return address;
 	}
 
-
+	/**
+	* <b>Description:</b> ser the address  of a user<br>
+	* @param address is the address of a user<br>
+	*/
+	
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-
+	/**
+	* <b>Description:</b> get the phone of a user<br>
+	* @return phone is a phone number of a user<br>
+	*/
+	
 	public String getPhone() {
 		return phone;
 	}
 
-
+	/**
+	* <b>Description:</b> ser the phone of a user<br>
+	* @param phone is a phone number of a user<br>
+	*/
+	
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-
+	/**
+	* <b>Description:</b> get the turns of a user<br>
+	* @return turns is a list of turns <br>
+	*/
+	
 	public ArrayList<Turn> getTurns() {
 		return turns;
 	}
-
-
+	
+	/**
+	* <b>Descrpition:</b> add a new turn of a user<br>
+	* @param l is the turn's letter <br>
+	* @param n is the turn's number <br>
+	* @param s is the turn's serial<br>
+	*/
+	
 	public void setTurn(char l,int n, int s) {
 		turns.add( new Turn(l,n,s));
 	}
 
-
+	/**
+	* <b>Description:</b> get the id of a user<br>
+	* @return id is the user's identification<br>
+	*/
+	
 	public String getId() {
 		return id;
 	}
-
-
+	
+	/**
+	* <b>Description:</b> get the name of a user<br>
+	* @return name is the user´s name<br>
+	*/
+	
 	public String getName() {
 		return name;
 	}
 
-
+	/**
+	* <b>Description:</b> get the last name of a user<br>
+	* @return lastName is the user´s last name<br>
+	*/	
+	
 	public String getLastName() {
 		return lastName;
 	}

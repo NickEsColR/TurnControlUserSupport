@@ -19,6 +19,11 @@ public class Main {
 	private Scanner board;
 	private ServiceCenter serviceCenter;
 	
+	/**
+	* <b>Description:</b> constructor of main<br>
+	* <b>Pos:</b> allow make whatever the program can do<br>
+	*/
+	
 	public Main() {
 		serviceCenter = new ServiceCenter();
 		board = new Scanner(System.in);
@@ -95,6 +100,12 @@ public class Main {
 			board.nextLine();
 		}
 	}
+	
+	/**
+	* <b>Description:</b> is a constant method that can execute the program<br>
+	* @param args is the arguments that user will introduce<br>
+	*/
+	
 	public static void main(String[]args) {
 		Main m = new Main();
 	}
