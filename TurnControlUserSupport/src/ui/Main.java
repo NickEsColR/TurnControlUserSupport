@@ -27,14 +27,7 @@ public class Main {
 	public Main() {
 		serviceCenter = new ServiceCenter();
 		board = new Scanner(System.in);
-		System.out.println("choose an option");
-		System.out.println("1. Set user a turn");
-		System.out.println("2. Add a new user");
-		System.out.println("3. advanceTurn");
-		System.out.println("4. add phone");
-		System.out.println("5. add address");
-		System.out.println("6. print turn");
-		System.out.println("7. exit");
+		menu();
 		int option = board.nextInt();
 		board.nextLine();
 		while(option != 7) {
@@ -96,11 +89,27 @@ public class Main {
 				System.out.println(serviceCenter.printTurn());
 			break;
 			}
+			menu();
 			option = board.nextInt();
 			board.nextLine();
 		}
+		
 	}
 	
+	private void menu() {
+		System.out.println("choose an option");
+		System.out.println("1. Set user a turn");
+		System.out.println("2. Add a new user");
+		System.out.println("3. advanceTurn");
+		System.out.println("4. add phone");
+		System.out.println("5. add address");
+		System.out.println("6. print turn");
+		System.out.println("7. exit");
+		System.out.println("--------------------------");
+		
+		
+	}
+
 	/**
 	* <b>Description:</b> is a constant method that can execute the program<br>
 	* @param args is the arguments that user will introduce<br>

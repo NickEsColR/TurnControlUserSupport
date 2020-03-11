@@ -1,7 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import CustomException.NoUserException;
 import CustomException.UserExistException;
@@ -182,5 +186,36 @@ public class ServiceCenter {
 			msg = actualLetter + Integer.toString(actualTurnNumber);
 		}
 		return msg;
+	}
+	
+	/**
+	 * <b>Descrpition:</b> generate random user from a file<br>
+	 * <b>pre:</b> the quantity is low than the ids in the file ids<br>
+	 * @param q is the quantity of users to be created<br>
+	 * @throws IOException is an error with BufferedReader <br>
+	 */
+	public void generateRandomUsers(int q) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(IDS));
+		String [] ids = br.readLine().split(" ");
+		br.close();
+		br = new BufferedReader(new FileReader(NAMES));
+		String[] names = br.readLine().split(" ");
+		br.close();
+		br = new BufferedReader(new FileReader(LAST_NAMES));
+		String[] lastn = br.readLine().split(" ");
+		br.close();
+		for(int i = 0; i < q;i++) {
+			Random randomNum = new Random(ids.length);
+			String id = ids[randomNum.nextInt()];
+			randomNum.setSeed(names.length);
+			String name = names[randomNum.nextInt()];
+			randomNum.setSeed(lastn.length);
+			String last = lastn[randomNum.nextInt()];
+			try {
+				addUser(id,name,last);
+			}catch(UserExistException e) {
+				i--;
+			}
+		}
 	}
 }
