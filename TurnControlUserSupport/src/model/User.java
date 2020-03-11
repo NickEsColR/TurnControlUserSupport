@@ -125,8 +125,22 @@ public class User {
 	public String getLastName() {
 		return lastName;
 	}
-
-
+	
+	/**
+	 * <b> Description: </b> look if an user has the same turn given on parameters<br>
+	 * @param l is the letter of the turn<br>
+	 * @param n is the number of the turn<br>
+	 * @return has is a boolean says if the user has a turn or doesn't<br>
+	 */
+	public Boolean hasTurn(char l,int n) {
+		boolean has = false;
+		for(int i = 0; i < turns.size() && !has;i++) {
+			if(turns.get(i).getLetter() == l && turns.get(i).getNum() == n) {
+				has = true;
+			}
+		}
+		return has;
+	}
 	@Override
 	public String toString() {
 		return "User name " + name + ", lastName=" + lastName;
