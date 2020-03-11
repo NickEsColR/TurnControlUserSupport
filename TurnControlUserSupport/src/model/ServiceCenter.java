@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import CustomException.NoUserException;
@@ -241,7 +243,44 @@ public class ServiceCenter {
 		return msg;
 	}
 	
+	/**
+	 * <b>Description:</b> sort the users on ascending order with id<br>
+	 * <b>Pre:</b> users != null<br>
+	 * <b>Pos:</b> the users will be sort successfully<br>
+	 */
 	public void sortUserById() {
 		Arrays.sort(users);
+	}
+	/**
+	 * <b>Description:</b> sort the users on ascending order with last name<br>
+	 * <b>Pre:</b> users != null<br>
+	 * <b>Pos:</b> the users will be sort successfully<br>
+	 */
+	public void sortUserByLastName() {
+		Comparator<User> userComparator = new UserLastNameComparator();
+		Arrays.sort(users,userComparator);
+	}
+	/**
+	 * <b>Description:</b> sort the users on descending order with id<br>
+	 * <b>Pre:</b> users != null<br>
+	 * <b>Pos:</b> the users will be sort successfully<br>
+	 */
+	public void sortUserByIdDescending() {
+		Arrays.sort(users,Collections.reverseOrder());
+	}
+	/**
+	 * <b>Description:</b> sort the users on ascending order with name<br>
+	 * <b>Pre:</b> users != null<br>
+	 * <b>Pos:</b> the users will be sort successfully<br>
+	 */
+	public void sortUserByName() {
+		Arrays.sort(users, new Comparator <User>() {
+
+			@Override
+			public int compare(User u1, User u2) {
+				return u1.getName().compareTo(u2.getName());
+			}
+			
+		});
 	}
 }
