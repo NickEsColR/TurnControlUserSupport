@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import CustomException.NoUserException;
@@ -39,19 +40,20 @@ public class ServiceCenter {
 	
 	//relations
 	
-	private ArrayList<User> users;
+	private User[] users;
 
 	
 	//methods
 	
-	public ServiceCenter() {
+	public ServiceCenter(int q) throws IOException {
 		actualLetter = 'A';
 		actualTurnNumber = 0;
 		lastLetterGiven= 'A';
 		lastNumGiven= 0;
 		actualSerial = 1;
 		lastSerialGiven = 1;
-		users = new ArrayList<User>();
+		users = new User[q];
+		generateRandomUsers(q);
 	}
 
 	public int getLastSerialGiven() {
@@ -94,7 +96,7 @@ public class ServiceCenter {
 		return lastNumGiven;
 	}
 
-	public ArrayList<User> getUsers() {
+	public User[] getUsers() {
 		return users;
 	}
 
@@ -103,7 +105,11 @@ public class ServiceCenter {
 		try{
 			u = searchUser(id);
 		}catch(NoUserException e) {
-			users.add(new User(id,n,l));
+			int i  = 0;
+			while(users[i]!=null) {
+				i++;
+			}
+			users[i]= new User(id,n,l);
 		}
 		if(u  != null) {	
 			throw new UserExistException(id);
@@ -113,8 +119,8 @@ public class ServiceCenter {
 	public User searchUser(String id) throws NoUserException {
 		User findUser = null;
 		boolean centinel = true;
-		for(int i = 0;i < users.size()&&centinel;i++) {
-			findUser = users.get(i).getId().contentEquals(id) ?  users.get(i) : null;
+		for(int i = 0;i < users.length&&centinel;i++) {
+			findUser = users[i].getId().equals(id) ?  users[i] : null;
 			centinel = findUser != null ? false : true;
 		}
 		if(findUser == null) {
@@ -143,11 +149,11 @@ public class ServiceCenter {
 	public Turn searchTurnCall() {
 		Turn userTurn = null;
 		boolean centinel = true;
-		for(int i = 0;i < users.size()&&centinel;i++) {
-			ArrayList<Turn> t = users.get(i).getTurns();
+		for(int i = 0;i < users.length&&centinel;i++) {
+			ArrayList<Turn> t = users[i].getTurns();
 			for(int j = 0;j < t.size();j++) {
 				if(t.get(j).getLetter()==actualLetter &&t.get(j).getNum()==actualTurnNumber &&t.get(j).getSerial()==actualSerial) {
-					userTurn = users.get(i).getTurns().get(j);
+					userTurn = users[i].getTurns().get(j);
 					centinel = false;
 				}
 			}
@@ -217,5 +223,25 @@ public class ServiceCenter {
 				i--;
 			}
 		}
+	}
+	/**
+	 * <b> Description: <br> generate a report of all users have the turn of parameters <br>
+	 * @param l is the letter of the turn for search<br>
+	 * @param n is the number of the turn for search, if n < 10 only appear 1 digit <br>
+	 * @return msg is a message of all users that have that code<br>
+	 */
+	public String generateReportSameTurns(char l, int n) {
+		String msg = "";
+			for(int i = 0; i < users.length;i++) {
+				if(users[i].hasTurn(l, n)) {
+					msg += users[i];
+					msg += "\n";
+				}
+			}
+		return msg;
+	}
+	
+	public void sortUserById() {
+		Arrays.sort(users);
 	}
 }

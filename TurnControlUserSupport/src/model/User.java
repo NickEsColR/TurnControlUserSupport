@@ -141,9 +141,17 @@ public class User {
 		}
 		return has;
 	}
+	/**
+	 * <b>Description:</b> use method compareTo on id attribute<br>
+	 * @param u is a user for compare with the actual<br>
+	 * @return a number of the difference between both<br>
+	 */
+	public int compareTo(User u) {
+		return id.compareTo(u.id);
+	}
 	@Override
 	public String toString() {
-		return "User name " + name + ", lastName=" + lastName;
+		return "User name " + name + ", lastName " + lastName;
 	}
 	
 }
