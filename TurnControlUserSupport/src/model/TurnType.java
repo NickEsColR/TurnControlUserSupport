@@ -1,5 +1,13 @@
 package model;
 
+/**
+* NICOLAS ESTEBAN COLMENARES RUIZ
+* UNIVERSIDAD ICESI
+* ALGORITMOS Y PROGRAMACION 2
+* LABORATORIO 1 TurnControl 
+* 09/03/2020
+*/
+
 public class TurnType {
 	
 	//Attributes

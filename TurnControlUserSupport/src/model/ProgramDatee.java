@@ -3,6 +3,14 @@ package model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+* NICOLAS ESTEBAN COLMENARES RUIZ
+* UNIVERSIDAD ICESI
+* ALGORITMOS Y PROGRAMACION 2
+* LABORATORIO 1 TurnControl 
+* 09/03/2020
+*/
+
 public class ProgramDatee {
 	
 	//attributes
@@ -19,6 +27,7 @@ public class ProgramDatee {
 	// methods
 	
 	public ProgramDatee() {
+		
 		date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		actualDate = date.format(new Date());
 	}

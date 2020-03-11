@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import CustomException.NoUserException;
@@ -19,6 +20,10 @@ public class ServiceCenter {
 	
 	public static int ATTENDED=0; 
 	public static int NO_ATTENDED=1;
+	public static String IDS = "data"+System.getProperty(File.separator)+"ids.turn";
+	public static String NAMES = "data"+System.getProperty(File.separator)+"names.turn";
+	public static String LAST_NAMES = "data"+System.getProperty(File.separator)+"lastn.turn";
+	
 	//attributes
 	
 	private char actualLetter;
