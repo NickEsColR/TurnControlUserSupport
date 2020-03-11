@@ -10,7 +10,7 @@ import java.util.ArrayList;
 * 06/02/2020
 */
 
-public class User {
+public class User implements Comparable<User>{
 	
 	//attributes
 	
@@ -141,17 +141,19 @@ public class User {
 		}
 		return has;
 	}
+	
+	@Override
+	public String toString() {
+		return "User name " + name + ", lastName " + lastName;
+	}
+
 	/**
 	 * <b>Description:</b> use method compareTo on id attribute<br>
 	 * @param u is a user for compare with the actual<br>
 	 * @return a number of the difference between both<br>
 	 */
+	@Override
 	public int compareTo(User u) {
 		return id.compareTo(u.id);
-	}
-	@Override
-	public String toString() {
-		return "User name " + name + ", lastName " + lastName;
-	}
-	
+	}	
 }
