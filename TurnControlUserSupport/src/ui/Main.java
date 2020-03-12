@@ -99,7 +99,7 @@ public class Main {
 	private void menu() {
 		System.out.println("choose an option");
 		System.out.println("1. Set user a turn");
-		System.out.println("2. Add a new user");
+		System.out.println("2. modify date");
 		System.out.println("3. advanceTurn");
 		System.out.println("4. add phone");
 		System.out.println("5. add address");

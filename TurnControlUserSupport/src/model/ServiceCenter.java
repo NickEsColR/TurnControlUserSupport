@@ -43,6 +43,8 @@ public class ServiceCenter {
 	//relations
 	
 	private User[] users;
+	private ArrayList<TurnType> tt;
+	private ProgramDatee pd;
 
 	
 	//methods
@@ -56,6 +58,19 @@ public class ServiceCenter {
 		lastSerialGiven = 1;
 		users = new User[q];
 		generateRandomUsers(q);
+		tt = new ArrayList<TurnType>();
+		pd = new ProgramDatee();
+	}
+
+	public ArrayList<TurnType> getTt() {
+		return tt;
+	}
+	
+	public void setTt(String na, float t) {
+		tt.add(new TurnType(na,t));
+	}
+	public ProgramDatee getPd() {
+		return pd;
 	}
 
 	public int getLastSerialGiven() {
@@ -102,21 +117,7 @@ public class ServiceCenter {
 		return users;
 	}
 
-	public void addUser(String id, String n, String l) throws UserExistException {
-		User u = null;
-		try{
-			u = searchUser(id);
-		}catch(NoUserException e) {
-			int i  = 0;
-			while(users[i]!=null) {
-				i++;
-			}
-			users[i]= new User(id,n,l);
-		}
-		if(u  != null) {	
-			throw new UserExistException(id);
-		}
-	}
+	
 	
 	public User searchUser(String id) throws NoUserException {
 		User findUser = null;
@@ -163,25 +164,9 @@ public class ServiceCenter {
 		return userTurn;
 	}
 	
-	public String advanceTurn(int r) {
+	public String advanceTurn() {
 		String msg = "";
-		Turn t= searchTurnCall();
-		if(t!=null) {
-			t.setAttended(r);
-			actualSerial =actualTurnNumber == 99 && actualLetter == 'Z' ? ++actualSerial : actualSerial;
-			if( actualTurnNumber == 99) {
-				actualLetter= actualLetter == 'Z' ? 'A' : ++actualLetter;
-			}
-			actualTurnNumber = actualTurnNumber == 99? 0 : ++actualTurnNumber;
-			if(actualTurnNumber < 10) {
-				msg = actualLetter + "0"+actualTurnNumber;
-			}
-			else {
-				msg = actualLetter + Integer.toString(actualTurnNumber);
-			}
-		}else {
-			msg = "No user with the next turn";
-		}
+		
 		return msg;
 	}
 	
@@ -283,4 +268,47 @@ public class ServiceCenter {
 			
 		});
 	}
+	
+	/**
+	 * <b>Description:</b> show the program date<br>
+	 * @return the date of the program<br>
+	 */
+	
+	public String showDate() {
+		return pd.ShowDate();
+	}
+	
+	/**
+	 * <b>Description:</b> modify the date of the program<br>
+	 * @param d is the day <br>
+	 * @param m is the month<br>
+	 * @param y is the year<br>
+	 * @param h is the hour<br>
+	 * @param min is the minutes<br>
+	 * @param s is the seconds<br>
+	 */
+	
+	public void modifyDate(int d, int m, int y, int h, int min, int s) {
+		pd.ModifyDate(d, m, y, h, min, s);
+	}
+	
+	/**
+	 * <d>Description:</b> sort turn type with time<br>
+	 */
+	
+	public void sortTurnTypeByTime() {
+		for(int i = 0; i < tt.size();i++) {
+			TurnType min = tt.get(i);
+			int posMin = 0;
+			for(int j = i; i < tt.size()-1;i++) {
+				if(tt.get(j).getTime()< min.getTime()) {
+					min = tt.get(j);
+					posMin = j;
+				}
+			}
+			tt.add(posMin, tt.get(i));
+			tt.add(i,min);
+		}
+	}
+
 }
