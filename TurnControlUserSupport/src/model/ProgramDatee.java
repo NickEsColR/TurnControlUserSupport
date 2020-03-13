@@ -42,22 +42,25 @@ public class ProgramDatee {
 	}
 	
 	public String ShowDate() {
-		String toReturn = "";
+		
 		if(year != 0) {
 			String[] divide = actualDate.split(" ");
-			String[] date = divide[0].split("-");
+			String[] aDate = divide[0].split("-");
 			String[] time = divide[1].split(":");
-			int difDay = day-Integer.parseInt(date[0]);
-			int difMonth = month - Integer.parseInt(date[1]);
-			int difYear = year - Integer.parseInt(date[2]);
+			int difDay = day-Integer.parseInt(aDate[0]);
+			int difMonth = month - Integer.parseInt(aDate[1]);
+			int difYear = year - Integer.parseInt(aDate[2]);
 			int difHour = hour - Integer.parseInt(time[0]);
 			int difMin = min - Integer.parseInt(time[1]);
 			int difSec = sec - Integer.parseInt(time[2]);
-			toReturn = date.format(new Date(difDay, difMonth, difYear, difHour, difMin, difSec));
+			|
+			
 		}
 		else {
-			toReturn = date.format(new Date());
+			actualDate = date.format(new Date());
 		}
-		return toReturn;
+		return actualDate;
 	}
+	
+	
 }

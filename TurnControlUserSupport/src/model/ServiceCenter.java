@@ -311,4 +311,15 @@ public class ServiceCenter {
 		}
 	}
 
+	public void sortTurnTypeByName() {
+		for(int i = 0; i < tt.size()-1;i++) {
+			for(int j = 0; j < tt.size()-1;j++) {
+				if(tt.get(j).getName().compareTo(tt.get(j++).getName())>0) {
+					TurnType temp = tt.get(j);
+					tt.add(j, tt.get(j++));
+					tt.add(j++,temp);
+				}
+			}
+		}
+	}
 }

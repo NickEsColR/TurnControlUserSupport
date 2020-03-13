@@ -94,6 +94,7 @@ public class Main {
 			board.nextLine();
 		}
 		
+		
 	}
 	
 	private void menu() {
