@@ -19,9 +19,18 @@ public class User implements Comparable<User>{
 	private String lastName;
 	private String address;
 	private String phone;
+	private boolean ban;
 	
 	//relations
 	
+	public boolean isBan() {
+		return ban;
+	}
+
+	public void setBan(boolean ban) {
+		this.ban = ban;
+	}
+
 	private ArrayList<Turn> turns;
 
 	

@@ -340,6 +340,7 @@ public class ServiceCenter {
 	 * <b>Description:</b> search all turns of an user by the id<br>
 	 * @param id is the id of the user wanna know the turns<br>
 	 * @return the turns of an user<br>
+	 * @throws UserNameNotFoundException if the id doesn't exist<br>
 	 */
 	public ArrayList<Turn> getTurnsWithUserId(String id) throws NoUserException{
 		sortUserById();
@@ -352,7 +353,12 @@ public class ServiceCenter {
 		}
 		return t;
 	}
-	
+	/**
+	 * <b>Description:</b> search all turns of an user by the name<br>
+	 * @param na is the name of the user for find the turns<br>
+	 * @return the turns of an user<br>
+	 * @throws UserNameNotFoundException if the name doesn't exist<br>
+	 */
 	public ArrayList<Turn> getTurnsWithUserName(String na) throws UserNameNotFoundException{
 		sortUserByName();
 		ArrayList<Turn> t = null;
@@ -376,6 +382,12 @@ public class ServiceCenter {
 		return t;
 	}
 	
+	/**
+	 * <b>Description:</b> search all turns of an user by the last name<br>
+	 * @param ln is the last name of the user of get the turns<br>
+	 * @return is the turns of a user<br>
+	 * @throws UserNameNotFoundException if the last name doesn't exist<br>
+	 */
 	public ArrayList<Turn> getTurnsWithUserLastName(String ln)throws UserNameNotFoundException{
 		sortUserByLastName();
 		ArrayList<Turn> t = null;
@@ -397,5 +409,23 @@ public class ServiceCenter {
 			throw new UserNameNotFoundException("the user with last name "+ln+ " wasn´t found");
 		}
 		return t;
+	}
+	
+	public void banUser(String id, boolean b) {
+		sortUserByIdDescending();
+		int min = 0;
+		int max = users.length;
+		boolean find = false;
+		while(min != max && !find) {
+			int mid = (max+min)/2;
+			if(users[mid].getId().equals(id)) {
+				find = true;
+				users[mid].setBan(b);
+			}else if(users[mid].getId().compareTo(id)>0){
+				min = mid+1;
+			}else {
+				max = mid-1;
+			}
+		}
 	}
 }
