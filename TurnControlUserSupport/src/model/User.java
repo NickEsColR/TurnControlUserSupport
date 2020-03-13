@@ -132,11 +132,19 @@ public class User implements Comparable<User>{
 	 * @param n is the number of the turn<br>
 	 * @return has is a boolean says if the user has a turn or doesn't<br>
 	 */
-	public Boolean hasTurn(char l,int n) {
+	public Boolean hasTurn(String compare) {
+		sortTurn();
 		boolean has = false;
-		for(int i = 0; i < turns.size() && !has;i++) {
-			if(turns.get(i).getLetter() == l && turns.get(i).getNum() == n) {
+		int min = 0;
+		int max = turns.size();
+		while(min != max&& !has) {
+			int mid = (min + max)/2;
+			if(turns.get(mid).toString().equals(compare)) {
 				has = true;
+			}else if(turns.get(mid).toString().compareTo(compare)>0) {
+				max = mid-1;
+			}else {
+				min = mid+1;
 			}
 		}
 		return has;
@@ -155,5 +163,18 @@ public class User implements Comparable<User>{
 	@Override
 	public int compareTo(User u) {
 		return id.compareTo(u.id);
-	}	
+	}
+	
+	/**
+	 * <b>Description:</b> sort the turns <br>
+	 */
+	public void sortTurn() {
+		for(int i = 1;i <turns.size();i++) {
+			for(int j = i;j > 0 && turns.get(j).toString().compareTo(turns.get(j-1).toString())> 0;j--) {
+				Turn temp = turns.get(j);
+				turns.add(j,turns.get(j-1));
+				turns.add(j-1,temp);
+			}
+		}
+	}
 }

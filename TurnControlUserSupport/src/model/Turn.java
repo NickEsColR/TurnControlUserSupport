@@ -106,7 +106,13 @@ public class Turn {
 
 	@Override
 	public String toString() {
-		return letter + Integer.toString(num) ;
+		String msg = "";
+		if(num < 10) {
+			msg = letter + "0" + Integer.toString(num);
+		}else {
+			msg = letter + Integer.toString(num) ;
+		}	
+		return msg;
 	}
 
 	
