@@ -12,6 +12,7 @@ import java.util.Random;
 
 import CustomException.NoUserException;
 import CustomException.UserExistException;
+import CustomException.UserNameNotFoundException;
 
 /**
 * NICOLAS ESTEBAN COLMENARES RUIZ
@@ -149,6 +150,11 @@ public class ServiceCenter {
 		searchUser(id).setAddress(a);
 	}
 	
+	/**
+	 * <b>Description:</b> search the turn to be called<br>
+	 * @return the next turn on the call<br> 
+	 */
+	
 	public Turn searchTurnCall() {
 		Turn userTurn = null;
 		boolean centinel = true;
@@ -164,6 +170,10 @@ public class ServiceCenter {
 		return userTurn;
 	}
 	
+	/**
+	 * modificar;
+	 * @return
+	 */
 	public String advanceTurn() {
 		String msg = "";
 		
@@ -217,10 +227,10 @@ public class ServiceCenter {
 	 * @param n is the number of the turn for search, if n < 10 only appear 1 digit <br>
 	 * @return msg is a message of all users that have that code<br>
 	 */
-	public String generateReportSameTurns(char l, int n) {
+	public String generateReportSameTurns(String c) {
 		String msg = "";
 			for(int i = 0; i < users.length;i++) {
-				if(users[i].hasTurn(l, n)) {
+				if(users[i].hasTurn(c)) {
 					msg += users[i];
 					msg += "\n";
 				}
@@ -310,7 +320,10 @@ public class ServiceCenter {
 			tt.add(i,min);
 		}
 	}
-
+	
+	/**
+	 * <b>Description:</b> sort turn type with name<br>
+	 */
 	public void sortTurnTypeByName() {
 		for(int i = 0; i < tt.size()-1;i++) {
 			for(int j = 0; j < tt.size()-1;j++) {
@@ -321,5 +334,68 @@ public class ServiceCenter {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * <b>Description:</b> search all turns of an user by the id<br>
+	 * @param id is the id of the user wanna know the turns<br>
+	 * @return the turns of an user<br>
+	 */
+	public ArrayList<Turn> getTurnsWithUserId(String id) throws NoUserException{
+		sortUserById();
+		ArrayList<Turn> t = null;
+		for(int i  = 0;i < users.length && users[i].getId().equals(id);i++) {
+			t = users[i].getTurns();
+		}
+		if(t == null) {
+			throw new NoUserException(id);
+		}
+		return t;
+	}
+	
+	public ArrayList<Turn> getTurnsWithUserName(String na) throws UserNameNotFoundException{
+		sortUserByName();
+		ArrayList<Turn> t = null;
+		int min = 0;
+		int max = users.length;
+		boolean find = false;
+		while(min != max && !find) {
+			int mid = (min+max)/2;
+			if(users[mid].getName().equalsIgnoreCase(na)) {
+				find = true;
+				t = users[mid].getTurns();
+			}else if(users[mid].getName().compareTo(na) > 0) {
+				max = mid-1;
+			}else {
+				min = mid+1;
+			}
+		}
+		if(t == null) {
+			throw new UserNameNotFoundException("the user with name "+na+ " wasn´t found");
+		}
+		return t;
+	}
+	
+	public ArrayList<Turn> getTurnsWithUserLastName(String ln)throws UserNameNotFoundException{
+		sortUserByLastName();
+		ArrayList<Turn> t = null;
+		int min = 0;
+		int max = users.length;
+		boolean find = false;
+		while(min != max && !find) {
+			int mid = (min+max)/2;
+			if(users[mid].getLastName().equalsIgnoreCase(ln)) {
+				find = true;
+				t = users[mid].getTurns();
+			}else if(users[mid].getLastName().compareTo(ln) > 0) {
+				max = mid-1;
+			}else {
+				min = mid+1;
+			}
+		}
+		if(t == null) {
+			throw new UserNameNotFoundException("the user with last name "+ln+ " wasn´t found");
+		}
+		return t;
 	}
 }
