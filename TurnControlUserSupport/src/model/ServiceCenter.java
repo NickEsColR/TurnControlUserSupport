@@ -26,8 +26,7 @@ public class ServiceCenter {
 	
 	//constants
 	
-	public static int ATTENDED=0; 
-	public static int NO_ATTENDED=1;
+	
 	public static String IDS = "data"+System.getProperty(File.separator)+"ids.turn";
 	public static String NAMES = "data"+System.getProperty(File.separator)+"names.turn";
 	public static String LAST_NAMES = "data"+System.getProperty(File.separator)+"lastn.turn";
@@ -50,15 +49,14 @@ public class ServiceCenter {
 	
 	//methods
 	
-	public ServiceCenter(int q) throws IOException {
+	public ServiceCenter()   {
 		actualLetter = 'A';
 		actualTurnNumber = 0;
 		lastLetterGiven= 'A';
 		lastNumGiven= 0;
 		actualSerial = 1;
 		lastSerialGiven = 1;
-		users = new User[q];
-		generateRandomUsers(q);
+		users = new User[0];
 		tt = new ArrayList<TurnType>();
 		pd = new ProgramDatee();
 	}
@@ -411,7 +409,7 @@ public class ServiceCenter {
 		return t;
 	}
 	
-	public void banUser(String id, boolean b) {
+	public void banUser(String id) {
 		sortUserByIdDescending();
 		int min = 0;
 		int max = users.length;
@@ -420,7 +418,7 @@ public class ServiceCenter {
 			int mid = (max+min)/2;
 			if(users[mid].getId().equals(id)) {
 				find = true;
-				users[mid].setBan(b);
+				users[mid].verifyBan();
 			}else if(users[mid].getId().compareTo(id)>0){
 				min = mid+1;
 			}else {

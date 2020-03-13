@@ -10,14 +10,26 @@ package model;
 
 public class Turn {
 	
+	public static int ATTENDED=0; 
+	public static int NO_ATTENDED=1;
+	
 	//atributes
 	
 	private char letter;
 	private int num;
 	private int serial;
 	private int attended;
+	private boolean wasntThere;
 	//methods
 	
+	public boolean isWasntThere() {
+		return wasntThere;
+	}
+
+	public void setWasntThere(boolean wasntThere) {
+		this.wasntThere = wasntThere;
+	}
+
 	/**
 	* <b>Descrpition:</b> constructor of a turn<br>
 	* @param l is the turn's letter <br>

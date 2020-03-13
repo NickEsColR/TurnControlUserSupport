@@ -23,13 +23,6 @@ public class User implements Comparable<User>{
 	
 	//relations
 	
-	public boolean isBan() {
-		return ban;
-	}
-
-	public void setBan(boolean ban) {
-		this.ban = ban;
-	}
 
 	private ArrayList<Turn> turns;
 
@@ -51,7 +44,38 @@ public class User implements Comparable<User>{
 		phone = "";
 		turns = new ArrayList<Turn>();
 	}
-
+	
+	/**
+	 * <b>Description:</b> look if the user is ban<br>
+	 * @return true if the user is ban or false otherwise<br>
+	 */
+	
+	public boolean isBan() {
+		return ban;
+	}
+	
+	/**
+	 * <b>Description:</b> remove a ban on an user<br>
+	 */
+	public void removeBan( ) {
+		ban = false;
+	}
+	
+	/**
+	 * <b>Description:</b> verify is the user will get a ban<br>
+	 */
+	
+	public void verifyBan() {
+		int last = turns.size()-1;
+		if(turns.size()>1){
+			if(!turns.get(last).isWasntThere() && !turns.get(last -1).isWasntThere()) {
+				ban = true;
+			}else {
+				ban = false;
+			}
+		}
+	}
+	
 	/**
 	* <b>Description:</b> get the address  of a user<br>
 	* @return address is the address of a user<br>
@@ -62,7 +86,7 @@ public class User implements Comparable<User>{
 	}
 
 	/**
-	* <b>Description:</b> ser the address  of a user<br>
+	* <b>Description:</b> set the address  of a user<br>
 	* @param address is the address of a user<br>
 	*/
 	
@@ -80,7 +104,7 @@ public class User implements Comparable<User>{
 	}
 
 	/**
-	* <b>Description:</b> ser the phone of a user<br>
+	* <b>Description:</b> set the phone of a user<br>
 	* @param phone is a phone number of a user<br>
 	*/
 	
@@ -98,7 +122,7 @@ public class User implements Comparable<User>{
 	}
 	
 	/**
-	* <b>Descrpition:</b> add a new turn of a user<br>
+	* <b>Description:</b> add a new turn of a user<br>
 	* @param l is the turn's letter <br>
 	* @param n is the turn's number <br>
 	* @param s is the turn's serial<br>
