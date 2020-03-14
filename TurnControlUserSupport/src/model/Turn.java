@@ -20,6 +20,11 @@ public class Turn {
 	private int serial;
 	private int attended;
 	private boolean wasntThere;
+	
+	//relations
+	
+	private TurnType tt;
+	
 	//methods
 	
 	public boolean isWasntThere() {
@@ -35,13 +40,23 @@ public class Turn {
 	* @param l is the turn's letter <br>
 	* @param n is the turn's number <br>
 	* @param s is the turn's serial<br>
+	* @param tt is the turn's turn type <br> 
 	*/
 	
-	public Turn(char l,int n,int s) {
+	public Turn(char l,int n,int s,TurnType tt) {
 		letter = l;
 		num = n;
 		serial = s;
 		attended = -1;
+		this.tt = tt;
+	}
+	
+	/**
+	 * <b>Description:</b> get the turn type of a type<br>
+	 * @return the turn type of the turn<br>
+	 */
+	public TurnType getTT() {
+		return tt;
 	}
 	
 	/**
@@ -124,6 +139,13 @@ public class Turn {
 		}else {
 			msg = letter + Integer.toString(num) ;
 		}	
+		msg += "attended "+attended;
+		if(wasntThere) {
+			msg += " was during attended ";
+		}else {
+			msg += " wasn't during attended ";
+		}
+		msg += tt;
 		return msg;
 	}
 

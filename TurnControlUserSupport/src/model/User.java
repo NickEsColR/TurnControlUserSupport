@@ -128,8 +128,8 @@ public class User implements Comparable<User>{
 	* @param s is the turn's serial<br>
 	*/
 	
-	public void setTurn(char l,int n, int s) {
-		turns.add( new Turn(l,n,s));
+	public void setTurn(char l,int n, int s,TurnType tt) {
+		turns.add( new Turn(l,n,s,tt));
 	}
 
 	/**

@@ -13,6 +13,7 @@ import java.util.Random;
 import CustomException.NoUserException;
 import CustomException.UserExistException;
 import CustomException.UserNameNotFoundException;
+import CustomException.UserNotFoundException;
 
 /**
 * NICOLAS ESTEBAN COLMENARES RUIZ
@@ -131,9 +132,24 @@ public class ServiceCenter {
 		return findUser;
 	}
 	
-	public void assignUserTurn(String id) throws NoUserException {
+	public void generateTurns(int turnsDay,int days) throws NoUserException, NoTurnTypeException, UserNotFoundException {
+		if(users != null) {
+			for(int i = 0;i < (turnsDay*days);i++) {	
+				Random randomUser = new Random(users.length);
+				assignUserTurn(users[randomUser.nextInt()].getId());
+			}
+		}else {
+			throw new UserNotFoundException("no users yet");
+		}
+	}
+	public void assignUserTurn(String id) throws NoUserException, NoTurnTypeException{
 		lastSerialGiven =lastNumGiven == 99 && lastLetterGiven == 'Z' ? ++lastSerialGiven : lastSerialGiven;
-		searchUser(id).setTurn(lastLetterGiven, lastNumGiven,lastSerialGiven);
+		if(tt == null) {
+			throw new NoTurnTypeException();
+		}
+		sortTurnTypeByTime();
+		Random r = new Random(tt.size());
+		searchUser(id).setTurn(lastLetterGiven, lastNumGiven,lastSerialGiven,tt.get(r.nextInt()));
 		if(lastNumGiven == 99) {
 			lastLetterGiven= lastLetterGiven == 'Z' ? 'A' : ++lastLetterGiven;
 		}
@@ -213,7 +229,7 @@ public class ServiceCenter {
 			randomNum.setSeed(lastn.length);
 			String last = lastn[randomNum.nextInt()];
 			try {
-				addUser(id,name,last);
+				addUser(id,name,last,i);
 			}catch(UserExistException e) {
 				i--;
 			}
@@ -224,14 +240,18 @@ public class ServiceCenter {
 	 * @param l is the letter of the turn for search<br>
 	 * @param n is the number of the turn for search, if n < 10 only appear 1 digit <br>
 	 * @return msg is a message of all users that have that code<br>
+	 * @throws UserNotFoundException if there is no users yet <br>
 	 */
-	public String generateReportSameTurns(String c) {
+	public String generateReportSameTurns(String c) throws UserNotFoundException{
 		String msg = "";
 			for(int i = 0; i < users.length;i++) {
 				if(users[i].hasTurn(c)) {
 					msg += users[i];
 					msg += "\n";
 				}
+			}
+			if(msg == "") {
+				throw new UserNotFoundException("theres no users yet");
 			}
 		return msg;
 	}
@@ -355,9 +375,9 @@ public class ServiceCenter {
 	 * <b>Description:</b> search all turns of an user by the name<br>
 	 * @param na is the name of the user for find the turns<br>
 	 * @return the turns of an user<br>
-	 * @throws UserNameNotFoundException if the name doesn't exist<br>
+	 * @throws UserNotFoundException if the name doesn't exist<br>
 	 */
-	public ArrayList<Turn> getTurnsWithUserName(String na) throws UserNameNotFoundException{
+	public ArrayList<Turn> getTurnsWithUserName(String na) throws UserNotFoundException{
 		sortUserByName();
 		ArrayList<Turn> t = null;
 		int min = 0;
@@ -375,7 +395,7 @@ public class ServiceCenter {
 			}
 		}
 		if(t == null) {
-			throw new UserNameNotFoundException("the user with name "+na+ " wasn´t found");
+			throw new UserNotFoundException("the user with name "+na+ " wasn´t found");
 		}
 		return t;
 	}
@@ -384,9 +404,9 @@ public class ServiceCenter {
 	 * <b>Description:</b> search all turns of an user by the last name<br>
 	 * @param ln is the last name of the user of get the turns<br>
 	 * @return is the turns of a user<br>
-	 * @throws UserNameNotFoundException if the last name doesn't exist<br>
+	 * @throws UserNotFoundException if the last name doesn't exist<br>
 	 */
-	public ArrayList<Turn> getTurnsWithUserLastName(String ln)throws UserNameNotFoundException{
+	public ArrayList<Turn> getTurnsWithUserLastName(String ln)throws UserNotFoundException{
 		sortUserByLastName();
 		ArrayList<Turn> t = null;
 		int min = 0;
@@ -404,13 +424,14 @@ public class ServiceCenter {
 			}
 		}
 		if(t == null) {
-			throw new UserNameNotFoundException("the user with last name "+ln+ " wasn´t found");
+			throw new UserNotFoundException("the user with last name "+ln+ " wasn´t found");
 		}
 		return t;
 	}
 	
-	public void banUser(String id) {
+	public boolean banUser(String id) {
 		sortUserByIdDescending();
+		boolean ban = false;
 		int min = 0;
 		int max = users.length;
 		boolean find = false;
@@ -419,11 +440,23 @@ public class ServiceCenter {
 			if(users[mid].getId().equals(id)) {
 				find = true;
 				users[mid].verifyBan();
+				ban = users[mid].isBan();
 			}else if(users[mid].getId().compareTo(id)>0){
 				min = mid+1;
 			}else {
 				max = mid-1;
 			}
 		}
+		return ban;
 	}
+	
+	public void addUser(String id, String n, String l,int pos) throws UserExistException {
+		try {
+			searchUser(id);
+			throw new UserExistException(id);
+		} catch (NoUserException e) {
+			users[pos] = new User(id,n,l);
+		}
+	}
+	
 }

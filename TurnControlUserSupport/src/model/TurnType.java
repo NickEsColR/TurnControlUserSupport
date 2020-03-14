@@ -29,6 +29,12 @@ public class TurnType {
 	public float getTime() {
 		return time;
 	}
+
+	@Override
+	public String toString() {
+		return " turn type name " + name + ", with time " + time ;
+	}
+	
 	
 	
 }

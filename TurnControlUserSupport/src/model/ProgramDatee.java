@@ -41,8 +41,9 @@ public class ProgramDatee {
 		sec = s;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String ShowDate() {
-		
+		Date d = new Date();
 		if(year != 0) {
 			String[] divide = actualDate.split(" ");
 			String[] aDate = divide[0].split("-");
@@ -53,10 +54,14 @@ public class ProgramDatee {
 			int difHour = hour - Integer.parseInt(time[0]);
 			int difMin = min - Integer.parseInt(time[1]);
 			int difSec = sec - Integer.parseInt(time[2]);
-			|
-			
-		}
-		else {
+			d.setSeconds(d.getSeconds() + difSec);
+			d.setMinutes(d.getMinutes() + difMin);
+			d.setHours(d.getHours()+difHour);
+			d.setDate(d.getDate()+difDay);
+			d.setMonth(d.getMonth()+difMonth);
+			d.setYear(d.getYear()+difYear);
+			actualDate = date.format(d);
+		}else {
 			actualDate = date.format(new Date());
 		}
 		return actualDate;
