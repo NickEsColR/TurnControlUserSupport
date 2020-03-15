@@ -29,9 +29,9 @@ public class ServiceCenter implements Serializable{
 	//constants
 	
 	
-	public static String IDS = "data"+System.getProperty(File.separator)+"ids.turn";
-	public static String NAMES = "data"+System.getProperty(File.separator)+"names.turn";
-	public static String LAST_NAMES = "data"+System.getProperty(File.separator)+"lastn.turn";
+	public static String IDS = "data"+System.getProperty(File.separator)+"ids.text";
+	public static String NAMES = "data"+System.getProperty(File.separator)+"names.text";
+	public static String LAST_NAMES = "data"+System.getProperty(File.separator)+"lastn.text";
 	
 	//attributes
 	

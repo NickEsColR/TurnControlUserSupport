@@ -38,7 +38,7 @@ public class Main {
 	
 	public Main() {
 		boolean userExist = false;
-		FileInputStream istream = new FileInputStream("t.tmp");
+		FileInputStream istream = new FileInputStream("turnProgram.text");
 		ObjectInputStream in = new ObjectInputStream(istream);
 		sc = (ServiceCenter)in.readObject();
 		istream.close();
@@ -281,7 +281,7 @@ public class Main {
 			case 12:
 				System.out.println("thanks for use the program came back soon");
 				time = System.currentTimeMillis();
-				FileOutputStream ostream = new FileOutputStream("turnProgram.turn");
+				FileOutputStream ostream = new FileOutputStream("turnProgram.text");
 				ObjectOutputStream os = new ObjectOutputStream(ostream);
 				os.writeObject(sc);
 				os.flush();
