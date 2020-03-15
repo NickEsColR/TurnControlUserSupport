@@ -3,8 +3,12 @@ import model.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,7 +38,13 @@ public class Main {
 	
 	public Main() {
 		boolean userExist = false;
-		sc = new ServiceCenter();
+		FileInputStream istream = new FileInputStream("t.tmp");
+		ObjectInputStream in = new ObjectInputStream(istream);
+		sc = (ServiceCenter)in.readObject();
+		istream.close();
+		if(sc == null) {
+			sc = new ServiceCenter();
+		}
 		System.out.println("An error ocurred");
 		board = new Scanner(System.in);
 		menu();
@@ -149,10 +159,18 @@ public class Main {
 				System.out.println(System.currentTimeMillis()-time);
 			break;
 			case 2:
-				
+				System.out.println("For advance turn first generate turns");
+				System.out.println("After update the date and all turns will advance until that date");
 			break;
 			case 3:
-				
+				System.out.println("Digit the turn name");
+				String name = board.nextLine();
+				System.out.println("Digit the turn duration keeping in mind that 1 unit means a minute and 0.5 means middle minute");
+				float min = board.nextFloat();
+				board.nextLine();
+				time = System.currentTimeMillis();
+				sc.setTt(name, min);
+				System.out.println(System.currentTimeMillis()-time);
 			break;
 			case 4:
 				System.out.println("Digit the user´s identification");
@@ -219,6 +237,7 @@ public class Main {
 				}
 				sc.showDate();
 				board.nextLine();
+				sc.advanceTurn();
 				System.out.println(System.currentTimeMillis()-time);
 			break;
 			case 9:
@@ -262,7 +281,11 @@ public class Main {
 			case 12:
 				System.out.println("thanks for use the program came back soon");
 				time = System.currentTimeMillis();
-				sc.serializeProgram();
+				FileOutputStream ostream = new FileOutputStream("turnProgram.turn");
+				ObjectOutputStream os = new ObjectOutputStream(ostream);
+				os.writeObject(sc);
+				os.flush();
+				ostream.close();
 				System.out.println(System.currentTimeMillis()-time);
 			break;
 			}

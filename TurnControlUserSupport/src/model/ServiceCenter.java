@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +24,7 @@ import CustomException.UserNotFoundException;
 * 06/02/2020
 */
 
-public class ServiceCenter {
+public class ServiceCenter implements Serializable{
 	
 	//constants
 	
@@ -185,13 +186,23 @@ public class ServiceCenter {
 	}
 	
 	/**
-	 * modificar;
-	 * @return
+	 * <b>Description:</b> the method advance the turn according with the update date<br>
 	 */
-	public String advanceTurn() {
-		String msg = "";
-		
-		return msg;
+	public void advanceTurn() {
+		sortTurnTypeByName();
+		Turn next = searchTurnCall();
+		Random randomNum = new Random(1);
+		float time = pd.getTimeInMinutes();
+		while(next.getTT().getTime() < time) {
+			time -= next.getTT().getTime();
+			next.setAttended(randomNum.nextInt());
+			actualSerial =actualTurnNumber == 99 && actualLetter == 'Z' ? ++actualSerial : actualSerial;
+			if( actualTurnNumber == 99) {
+				actualLetter= actualLetter == 'Z' ? 'A' : ++actualLetter;
+			}
+			actualTurnNumber = actualTurnNumber == 99? 0 : ++actualTurnNumber;
+	
+		}
 	}
 	
 	public String printTurn() {

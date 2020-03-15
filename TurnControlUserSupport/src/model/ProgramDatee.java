@@ -23,6 +23,7 @@ public class ProgramDatee {
 	private int sec;
 	private SimpleDateFormat date;
 	private String actualDate;
+	private long timeMilis;
 	
 	// methods
 	
@@ -30,6 +31,7 @@ public class ProgramDatee {
 		
 		date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		actualDate = date.format(new Date());
+		timeMilis = System.currentTimeMillis();
 	}
 	
 	public void ModifyDate(int d, int m, int y, int h, int min, int s) {
@@ -39,11 +41,13 @@ public class ProgramDatee {
 		hour = h;
 		this.min = min;
 		sec = s;
+		ShowDate();
 	}
 	
 	@SuppressWarnings("deprecation")
 	public String ShowDate() {
 		Date d = new Date();
+		long timeMili = System.currentTimeMillis();
 		if(year != 0) {
 			String[] divide = actualDate.split(" ");
 			String[] aDate = divide[0].split("-");
@@ -60,12 +64,19 @@ public class ProgramDatee {
 			d.setDate(d.getDate()+difDay);
 			d.setMonth(d.getMonth()+difMonth);
 			d.setYear(d.getYear()+difYear);
+			timeMilis = timeMili - timeMilis;
 			actualDate = date.format(d);
 		}else {
+			timeMilis = timeMili - timeMilis;
 			actualDate = date.format(new Date());
 		}
 		return actualDate;
 	}
 	
-	
+	public float getTimeInMinutes() {
+		float timeInMin = 0;
+		float sec	= (float) (timeMilis / 1000);
+		timeInMin = sec / 60;
+		return timeInMin;
+	}
 }
